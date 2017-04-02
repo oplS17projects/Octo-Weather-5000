@@ -55,7 +55,7 @@ PLAN: Have a webpage that will deliver date, time, current weather, and forecast
 How will you know if you are successful? 
 If you include some kind of _quantitative analysis,_ that would be good.
 
-If it fucking works, I guess.
+If it works, I guess.
 
 ## Architecture Diagram
 Upload the architecture diagram you made for your slide presentation to your repository, and include it in-line here.
