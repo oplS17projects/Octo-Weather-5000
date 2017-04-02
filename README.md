@@ -3,7 +3,7 @@
 ### Statement
 Describe your project. Why is it interesting? Why is it interesting to you personally? What do you hope to learn? 
 
-Project revolves around implementing a webpage that will not only give you relevant time and date information, but weather forecast as well in a simple and practical way.
+Project revolves around implementing a program that will not only give you relevant time and date information, but weather forecast as well in a practical and useful way. We hope to learn more about APIs, information parsing, and web development in general, and that's why this project is interesting on a personal level.
 
 ### Analysis
 Explain what approaches from class you will bring to bear on the project.
@@ -29,16 +29,20 @@ RECURSION: I'm thinking of using recursion to display weather data taken from a 
 
 
 ### External Technologies
-We plan on using weather underground's information to provide relevant weather information either by web scraping or using an appropriate API.
+We plan on using a weather API to provide relevant weather information and parsing the information appropriately.
 
 ### Data Sets or other Source Materials
-If you will be working with existing data, where will you get those data from? (Dowload from a website? Access in a database? Create in a simulation you will build? ...)
+We will be working with data from APIs that were made available to us. 
 
-How will you convert your data into a form usable for your project?  
+**Here's an example of JSON data we got from a weather API**
 
-If you are pulling data from somewhere, actually go download it and look at it before writing the proposal. Explain in some detail what your plan is for accomplishing the necessary processing.
+```
+{"all":92},"wind":{"speed":3.45,"deg":135.003},"rain":{"3h":0.58},"snow":{},"sys":{"pod":"d"},"dt_txt":"2017-04-07 12:00:00"},{"dt":1491577200,"main":{"temp":282.769,"temp_min":282.769,"temp_max":282.769,"pressure":994.7,"sea_level":1014.37,"grnd_level":994.7,"humidity":96,"temp_kf":0},"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],"clouds":{"all":76},"wind":{"speed":2.54,"deg":148.505},"rain":{"3h":0.13},"snow":{},"sys":{"pod":"d"},"dt_txt":"2017-04-07 15:00:00"}],"city":{"id":524901,"name":"Moscow","coord":{"lat":55.7522,"lon":37.6156},"country":"RU"}}
+```
+We plan to parse through this kind of data to display relevant weather information using Racket's json-parsing library along with other libraries like xtml-parsing and the net/url library.
 
-If you are using some other starting materials, explain what they are. Basically: anything you plan to use that isn't code.
+We also plan on using Google's Geolocation API once we figure out how to implement it. This will allow the webpage to get the user's location info, and then we use that to get the weather from our other API.
+
 
 ### Deliverable and Demonstration
 Explain exactly what you'll have at the end. What will it be able to do at the live demo?
@@ -51,11 +55,14 @@ Will it be interactive? Can you show it working? This project involves a live de
 
 PLAN: Have a webpage that will deliver date, time, current weather, and forecast. As for interactions, maybe have charts/graphs that are interactive, as well as being able to switch from five day forecast to detailed single day forecast. 
 
+**In the end, we'll have a program that will display time and weather. Users can interact with it to see charts/graphs, as well as detailed hourly forecasts versus five day forecasts.**
+
 ### Evaluation of Results
 How will you know if you are successful? 
 If you include some kind of _quantitative analysis,_ that would be good.
 
-If it works, I guess.
+- If the weather and time can be gathered accurately depending on user's location.
+- If users can interact with it without having it break.
 
 ## Architecture Diagram
 Upload the architecture diagram you made for your slide presentation to your repository, and include it in-line here.
@@ -65,22 +72,15 @@ Create several paragraphs of narrative to explain the pieces and how they intero
 ## Schedule
 Explain how you will go from proposal to finished product. 
 
-There are three deliverable milestones to explicitly define, below.
-
-The nature of deliverables depend on your project, but may include things like processed data ready for import, core algorithms implemented, interface design prototyped, etc. 
-
-You will be expected to turn in code, documentation, and data (as appropriate) at each of these stages.
-
-Write concrete steps for your schedule to move from concept to working system. 
-
 ### First Milestone (Sun Apr 9)
-Which portion of the work will be completed (and committed to Github) by this day? 
+- Know exactly what APIs we will be using, as well as have all the tools to parse the info.
+- 
 
 ### Second Milestone (Sun Apr 16)
-Which portion of the work will be completed (and committed to Github) by this day?  
+- 
 
 ### Public Presentation (Mon Apr 24, Wed Apr 26, or Fri Apr 28 [your date to be determined later])
-What additionally will be completed before the public presentation?
+- 
 
 ## Group Responsibilities
 Here each group member gets a section where they, as an individual, detail what they are responsible for in this project. Each group member writes their own Responsibility section. Include the milestones and final deliverable.
