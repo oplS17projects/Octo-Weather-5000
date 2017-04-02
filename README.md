@@ -101,4 +101,4 @@ Here each group member gets a section where they, as an individual, detail what 
 will write the code necessary to get the relevant weather information extracted.
 
 ### Rob Cucchiara @rcucchiara
-will be responsible for ...
+will take the retrieved weather data and present it in an appealing and compelling way.
