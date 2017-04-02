@@ -23,9 +23,9 @@ The idea here is to identify what ideas from the class you will use in carrying 
 
 **Your project will be graded, in part, by the extent to which you adopt approaches from the course into your implementation, _and_ your discussion about this.**
 
-DATA ABSTRACTION: getting weather from websites/APIs 
-OOP/state-modification: A possiblility? Create a weather object and time object and have them do everything.
-RECURSION: I'm thinking of using recursion to display weather data taken from a list. I'm sure there are other things.
+- DATA ABSTRACTION: getting weather from websites/APIs 
+- OOP/state-modification: A possiblility? Create a weather object and time object and have them do everything.
+- RECURSION: I'm thinking of using recursion to display weather data taken from a list. I'm sure there are other things.
 
 
 ### External Technologies
@@ -34,10 +34,20 @@ We plan on using a weather API to provide relevant weather information and parsi
 ### Data Sets or other Source Materials
 We will be working with data from APIs that were made available to us. 
 
-**Here's an example of JSON data we got from a weather API**
+**Here's an example of XML data we got from a weather API**
 
 ```
-{"all":92},"wind":{"speed":3.45,"deg":135.003},"rain":{"3h":0.58},"snow":{},"sys":{"pod":"d"},"dt_txt":"2017-04-07 12:00:00"},{"dt":1491577200,"main":{"temp":282.769,"temp_min":282.769,"temp_max":282.769,"pressure":994.7,"sea_level":1014.37,"grnd_level":994.7,"humidity":96,"temp_kf":0},"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],"clouds":{"all":76},"wind":{"speed":2.54,"deg":148.505},"rain":{"3h":0.13},"snow":{},"sys":{"pod":"d"},"dt_txt":"2017-04-07 15:00:00"}],"city":{"id":524901,"name":"Moscow","coord":{"lat":55.7522,"lon":37.6156},"country":"RU"}}
+<forecast>
+ <time from="2017-04-02T15:00:00" to="2017-04-02T18:00:00">
+  <symbol number="800" name="clear sky" var="02d"/>
+  <precipitation/>
+  <windDirection deg="315.002" code="NW" name="Northwest"/>
+  <windSpeed mps="3.27" name="Light breeze"/>
+  <temperature unit="kelvin" value="284.13" min="283.247" max="284.13"/>
+  <pressure unit="hPa" value="999.89"/>
+  <humidity value="50" unit="%"/>
+  <clouds value="clear sky" all="8" unit="%"/>
+ </time>
 ```
 We plan to parse through this kind of data to display relevant weather information using Racket's json-parsing library along with other libraries like xtml-parsing and the net/url library.
 
