@@ -48,7 +48,8 @@ We will have an application that will deliver date, time, current weather, and f
 - Users can interact with it without having it break.
 
 ## Architecture Diagram
-Upload the architecture diagram you made for your slide presentation to your repository, and include it in-line here.
+![Octo-Weather-5000](/Octo-Weather-5000/arch-diagram.png?raw=true)
+
 
 
 ## Schedule
