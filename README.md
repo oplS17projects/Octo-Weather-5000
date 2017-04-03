@@ -48,8 +48,7 @@ We will have an application that will deliver date, time, current weather, and f
 - Users can interact with it without having it break.
 
 ## Architecture Diagram
-![Octo-Weather-5000](/Octo-Weather-5000/arch-diagram.png?raw=true)
-
+![alt tag](https://github.com/oplS17projects/Octo-Weather-5000/blob/master/arch-diagram.png)
 
 
 ## Schedule
