@@ -50,6 +50,7 @@ We will have an application that will deliver date, time, current weather, and f
 ## Architecture Diagram
 ![alt tag](https://github.com/oplS17projects/Octo-Weather-5000/blob/master/arch-diagram.png)
 
+MAIN is the driver for this application that will create the output after collating it using the waether object.  The weather object which will be built using html-parsing from a weather API. In addition to that we will use tz-info to display the local time to the user. After the waether object has been constructed, main will call an output function which will present the information to the user using a graphical user interface.
 
 ## Schedule
 
