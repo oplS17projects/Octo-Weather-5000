@@ -7,8 +7,8 @@ Project revolves around implementing a program that will not only give you relev
 ### Analysis
 
 - DATA ABSTRACTION: getting weather from websites/APIs 
-- OOP/state-modification: A possiblility? Create a weather object and time object and have them do everything.
-- RECURSION: I'm thinking of using recursion to display weather data taken from a list. I'm sure there are other things.
+- OOP/state-modification: Create a weather object and time object and have them do everything.
+- RECURSION: Planning on using recursion to display weather data taken from a list. I'm sure there are other things.
 
 
 ### External Technologies
