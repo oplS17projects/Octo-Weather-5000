@@ -30,6 +30,7 @@ The idea here is to identify what ideas from the class you will use in carrying 
 
 ### External Technologies
 We plan on using a weather API to provide relevant weather information and parsing the information appropriately.
+We are also going to explore Google Geolocation API with the purpose of displaying the weather near the users current location.
 
 ### Data Sets or other Source Materials
 We will be working with data from APIs that were made available to us. 
