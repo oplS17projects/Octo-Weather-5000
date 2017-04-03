@@ -55,13 +55,14 @@ We will have an application that will deliver date, time, current weather, and f
 
 ### First Milestone (Sun Apr 9)
 - Know exactly what APIs we will be using, as well as have all the tools to parse the info.
-- 
+- create a waether object that holds relevant data
+- create a basic output for testing purposes
 
 ### Second Milestone (Sun Apr 16)
-- 
+- An application that displays the weather in your current location with a 5 day forecast
+- Have an output using gui-lib
 
 ### Public Presentation (Mon Apr 24, Wed Apr 26, or Fri Apr 28 [your date to be determined later])
-- 
 
 ## Group Responsibilities
 
