@@ -1,0 +1,15 @@
+#lang racket
+
+(module octo-weather-5000 racket
+  (require net/url)
+  (require html)
+  (require 2htdp/batch-io)
+  
+  (define myurl (string->url "http://api.openweathermap.org/data/2.5/forecast?zip=01453,us&APPID=024dd4f2839dc4f02b33965583da944f"))
+  (define myport (get-pure-port myurl))
+  (define myweather (port->string myport))
+  (close-input-port myport)
+  
+  (write-file "weather_data.json" myweather))
+
+(require 'octo-weather-5000)
