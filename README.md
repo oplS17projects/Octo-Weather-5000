@@ -7,8 +7,8 @@ Project revolves around implementing a program that will not only give you relev
 ### Analysis
 
 - DATA ABSTRACTION: getting weather from websites/APIs 
-- OOP/state-modification: A possiblility? Create a weather object and time object and have them do everything.
-- RECURSION: I'm thinking of using recursion to display weather data taken from a list. I'm sure there are other things.
+- OOP/state-modification: Create a weather object and time object and have them do everything.
+- RECURSION: Planning on using recursion to display weather data taken from a list. I'm sure there are other things.
 
 
 ### External Technologies
@@ -48,20 +48,24 @@ We will have an application that will deliver date, time, current weather, and f
 - Users can interact with it without having it break.
 
 ## Architecture Diagram
-Upload the architecture diagram you made for your slide presentation to your repository, and include it in-line here.
+![alt tag](https://github.com/oplS17projects/Octo-Weather-5000/blob/master/arch-diagram.png)
 
+Main is the driver for this application that will create the output after collating it using the weather object. The weather object will be built by taking infomation from a weather API and assigning it to class variables. These variables will be used to store the appropriate information relevant to the user. 
+
+After the weather object has been constructed, main will call an output function which will present the information to the user using a graphical user interface, calling on the weather object for its share of the work. In addition to that we will use tz-info to display the local time to the user. 
 
 ## Schedule
 
 ### First Milestone (Sun Apr 9)
 - Know exactly what APIs we will be using, as well as have all the tools to parse the info.
-- 
+- Create a weather object that holds relevant data
+- Create a basic output for testing purposes
 
 ### Second Milestone (Sun Apr 16)
-- 
+- Have an application that displays the weather in your current location with a 5 day forecast
+- Have an output using gui-lib
 
 ### Public Presentation (Mon Apr 24, Wed Apr 26, or Fri Apr 28 [your date to be determined later])
-- 
 
 ## Group Responsibilities
 
