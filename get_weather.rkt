@@ -2,6 +2,7 @@
 
 (require readline readline/readline)
 (require net/url html json 2htdp/batch-io racket/date)
+(provide (all-defined-out))
 
 ; units of measurement
 (define metric "&units=metric")
