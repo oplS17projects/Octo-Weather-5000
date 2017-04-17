@@ -1,5 +1,6 @@
 #lang racket
 
+(provide (all-defined-out))
 ;; this is a rudimentary object for the weather
 ;; we will probably need to add some other functionality
 
