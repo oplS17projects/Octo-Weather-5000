@@ -20,7 +20,7 @@
 ;(define zipcode (readline "Enter US zip code: "))
 
 ;; TEMPORARY ZIPCODE
-(define zipcode "01453")
+(define zipcode "01854")
 
 ; get weather in JSON format from API
 (define myurl (string->url (string-append "http://api.openweathermap.org/data/2.5/" weather "zip=" zipcode ",us" app_id imperial)))
