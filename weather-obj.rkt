@@ -3,7 +3,7 @@
 ;; this is a rudimentary object for the weather
 ;; we will probably need to add some other functionality
 
-(define (make-forecast temp-high ; the days highest predicted temperature
+(define (make-weather temp-high ; the days highest predicted temperature
                        temp-low ; the days lowest predicted temperature
                        percip-chance ; the % chance of percipitation
                        percip-amount; amount of rain or snow fall in inches --- maybe this one isnt realistic
