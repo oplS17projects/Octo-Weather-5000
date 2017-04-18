@@ -1,6 +1,6 @@
 #lang racket
 
-(require readline readline/readline)
+;(require readline readline/readline)
 (require net/url html json 2htdp/batch-io racket/date)
 (provide (all-defined-out))
 
@@ -59,17 +59,8 @@
 (define weather_date (date->string (seconds->date (hash-ref weather_data_string 'dt))))
 
 
-
-(printf "\nToday's forecast in ")
-(display weather_location)
-(printf " on ")
-(display weather_date)
-(printf " is ")
-(display weather_description)
-(printf " with a high of ")
-(display temp_max)
-(printf " and a low of ")
-(display temp_min)
+(printf "\nToday's forecast in ~a on ~a is ~a with a high of ~a and a low of ~a."
+        weather_location weather_date weather_description temp_max temp_min)
 
         
 
