@@ -64,10 +64,8 @@
   ;return the object
   obj)
 
-; sample call to create your own weather object by providing a zipcode.
-(define my_weather (make_weather "01453"))
-
-; sample weather data output by accessing weather object members
-(printf "Today's weather in ~a on ~a is ~a with a high of ~a and a low of ~a.\n"
-          (get-field location my_weather) (get-field date my_weather) (get-field description my_weather)
-          (get-field high my_weather) (get-field low my_weather))
+(define (weather->string forecast)
+  (string-append (get-field location forecast) "\nThe temperature is currently "
+                 (number->string (get-field temp forecast)) "\n" (get-field description forecast)
+                 "\nHigh: " (number->string (get-field high forecast)) "\nLow: "
+                 (number->string (get-field low forecast)))) 
