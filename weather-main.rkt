@@ -1,6 +1,5 @@
 #lang racket
 (require (file "weather-obj.rkt"))
-(require (file "get_weather.rkt"))
 (require racket/date)
 (require racket/gui/base)
 
