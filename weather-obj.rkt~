@@ -37,11 +37,7 @@
   
   (define weather_data (read-file "weather_data.json"))
   (define weather_data_string (string->jsexpr weather_data))
-; TEST COMMENT
-  ;TEST
-  ;TEST
-  ;TEST
-  
+
   ; time to make the object
   (define obj (new weather% 
        ; set values to weather object member variables
