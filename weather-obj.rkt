@@ -1,113 +1,73 @@
 #lang racket
 (require net/url json 2htdp/batch-io racket/date)
-;(provide (all-defined-out))
+(provide (all-defined-out))
 
+; weather class object
 (define weather%
   (class object%
     (super-new)
-    (init-field _zipcode
-                [imperial "&units=imperial"]
-                [app_id "&APPID=024dd4f2839dc4f02b33965583da944f"]
-                [weather_type "weather?"]
-                [location "error"]
-                [description "[none]"]
-                [temp 0]
-                [low 0]
-                [high 0]
-                [pressure 0]
-                [humidity 0]
-                [cloudiness 0]
-                [wind 0]
-                [rain 0]
-                [snow 0]
-                [date "error"])
-    (define/public (make_weather)
-      (printf "Hello from inside make_weather!\n")
-      
-      (define myurl (string->url (string-append "http://api.openweathermap.org/data/2.5/" weather_type "zip=" zipcode ",us" app_id imperial)))
-      (define myport (get-pure-port myurl))
-      (define myweather (port->string myport))
-      (close-input-port myport)
+    (init-field location
+                description
+                temp
+                low
+                high
+                pressure
+                humidity
+                cloudiness
+                wind
+                rain
+                snow
+                date)))
 
-      (write-file "weather_data.json" myweather)
+; "constructor" - takes a zipcode, produces a weather object
+(define (make_weather zipcode)
 
-      (define weather_data (read-file "weather_data.json"))
-      (define weather_data_string (string->jsexpr weather_data))
+  ; set some defaults for getting weather info from API
+  (define imperial "&units=imperial")
+  (define app_id "&APPID=024dd4f2839dc4f02b33965583da944f")
+  (define weather_type "weather?")
 
-      (new this% [zipcode zipcode]
-      ; define weather data variables with values
-      [location (hash-ref weather_data_string 'name)]
-      [description (hash-ref (car (hash-ref weather_data_string 'weather)) 'description)]
-      [temp (hash-ref (hash-ref weather_data_string 'main) 'temp)]
-      [low (hash-ref (hash-ref weather_data_string 'main) 'temp_min)]
-      [high (hash-ref (hash-ref weather_data_string 'main) 'temp_max)]
-      [pressure (hash-ref (hash-ref weather_data_string 'main) 'pressure)] ; atmospheric pressure (hPa)
-      [humidity (hash-ref (hash-ref weather_data_string 'main) 'humidity)]
-      [cloudiness (hash-ref (hash-ref weather_data_string 'clouds) 'all)] ; this is a percentage
-      [wind (hash-ref (hash-ref weather_data_string 'wind) 'speed)] ; can also get wind direction?
-
-      ; precipitation (in terms of volume in the last 3 hours)
-      [rain (if (hash-has-key? weather_data_string 'rain)
-                       (hash-ref (hash-ref weather_data_string 'rain) '3h)
-                       0)]
-      [snow (if (hash-has-key? weather_data_string 'snow)
-                       (hash-ref (hash-ref weather_data_string 'snow) '3h)
-                       0)]
-
-      ; date weather info was taken (should always be current date)
-      [date (date->string (seconds->date (hash-ref weather_data_string 'dt)))])
-      
-      (printf "Made it to the end on ~a\n" date))))
-
-
-
-(define my_weather (new weather% [_zipcode "01453"])) ; will prompt for zipcode 
-(send my_weather make_weather)  ; not working? goes through procedure, but doesn't create/update the object
+  ; get the info from API and write it to a file for parsing
+  (define myurl (string->url (string-append "http://api.openweathermap.org/data/2.5/" weather_type "zip=" zipcode ",us" app_id imperial)))
+  (define myport (get-pure-port myurl))
+  (define myweather (port->string myport))
+  (close-input-port myport)
   
+  (write-file "weather_data.json" myweather)
+  
+  (define weather_data (read-file "weather_data.json"))
+  (define weather_data_string (string->jsexpr weather_data))
 
-#|
-;; this is a rudimentary object for the weather
-;; we will probably need to add some other functionality
+  ; time to make the object
+  (define obj (new weather% 
+       ; set values to weather object member variables
+       [location (hash-ref weather_data_string 'name)]
+       [description (hash-ref (car (hash-ref weather_data_string 'weather)) 'description)]
+       [temp (hash-ref (hash-ref weather_data_string 'main) 'temp)]
+       [low (hash-ref (hash-ref weather_data_string 'main) 'temp_min)]
+       [high (hash-ref (hash-ref weather_data_string 'main) 'temp_max)]
+       [pressure (hash-ref (hash-ref weather_data_string 'main) 'pressure)] ; atmospheric pressure (hPa)
+       [humidity (hash-ref (hash-ref weather_data_string 'main) 'humidity)]
+       [cloudiness (hash-ref (hash-ref weather_data_string 'clouds) 'all)] ; this is a percentage
+       [wind (hash-ref (hash-ref weather_data_string 'wind) 'speed)] ; can also get wind direction?
+       
+       ; precipitation (in terms of volume in the last 3 hours)
+       [rain (if (hash-has-key? weather_data_string 'rain)
+                 (hash-ref (hash-ref weather_data_string 'rain) '3h)
+                 0)]
+       [snow (if (hash-has-key? weather_data_string 'snow)
+                 (hash-ref (hash-ref weather_data_string 'snow) '3h)
+                 0)]
+       
+       ; date weather info was taken (should always be current date)
+       [date (date->string (seconds->date (hash-ref weather_data_string 'dt)))]))
+  ;return the object
+  obj)
 
-(define (make-forecast location ; the city or town given a zip code
-                       descrip ; weather descrition from openweather api
-                       temp-cur ; current temperature
-                       temp-high ; the days highest predicted temperature
-                       temp-low ; the days lowest predicted temperature
-                       wind ; average wind speed(mph) for the day
-                       cloudy ; either a bool or a string not sure what is better
-                       humidity) ; % humidity
-  (define (get-loc) location)
-  (define (get-desc) descrip)
-  (define (get-cur) temp-cur)
-  (define (get-high) temp-high)
-  (define (get-low) temp-low)
-  (define (get-wind) wind)
-  (define (get-cloudy) cloudy)
-  (define (get-humidity) humidity)
-  (define (dispatch m)
-    (cond ((eq? m 'get-loc) (get-loc))
-          ((eq? m 'get-desc) (get-desc))
-          ((eq? m 'get-cur) (get-cur))
-          ((eq? m 'get-high) (get-high))
-          ((eq? m 'get-low) (get-low))
-          ((eq? m 'get-wind) (get-wind))
-          ((eq? m 'get-cloudy) (get-cloudy))
-          ((eq? m 'get-humidity) (get-humidity))
-          (else (error "Unknown command" m))))
-  dispatch)
-<<<<<<< HEAD
+; sample call to create your own weather object by providing a zipcode.
+(define my_weather (make_weather "01453"))
 
-
-;; We can make a loop here and generate an x amount day forecast using some loop and making a list
-;;; length = days the user requests for a forecast
-;;; data = apropriate data that raph gets from API.
-;;;; not sure in what form this comes in at the time of writing this
-(define (forecast-length length data)
-  1)
-;; As a side note, im not actually sure what happens when we put the object in a list
-;; but we will find that out next week
-
-|#
-=======
->>>>>>> 06d5879fcf8485f39ae6df8bc50dac60156cfdb9
+; sample weather data output by accessing weather object members
+(printf "Today's weather in ~a on ~a is ~a with a high of ~a and a low of ~a.\n"
+          (get-field location my_weather) (get-field date my_weather) (get-field description my_weather)
+          (get-field high my_weather) (get-field low my_weather))

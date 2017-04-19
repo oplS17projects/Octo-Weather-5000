@@ -1,0 +1,1 @@
+("6.3" ("5018204ca04cc1f65fcb318a1fa1a4152edf28d7" . "bdd799164a077c91aecb02eb99a7ae741f8f07c3") (collects #"2htdp" #"batch-io.rkt") (collects #"json" #"main.rkt") (collects #"net" #"url.rkt") (collects #"racket" #"date.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))
