@@ -20,31 +20,34 @@
                 snow
                 date)))
 
-; "constructor" - takes a zipcode, produces a weather object
+; "constructor" - takes a zipcode, produces a list of weather objects
 (define (make_forecast zipcode)
   
   ; set dome defaults for getting weather info from API
   (define imperial "&units=imperial")
   (define app_id "&APPID=024dd4f2839dc4f02b33965583da944f")
-  
+
+  ; get JSON info from API
   (define myurl (string->url (string-append "http://api.openweathermap.org/data/2.5/forecast/daily?zip=" zipcode ",us" app_id imperial)))
   (define myport (get-pure-port myurl))
   (define myforecast (port->string myport))
   (close-input-port myport)
   (define forecast_data_string (string->jsexpr myforecast))
 
-  ; make_forecast is now called recursively to create weather objects and put them in a list
+  ; make_forecast is now called recursively to create weather objects
+  ; and put them in a list called forecast.
   ; this becomes the five day forecast
   (define forecast (make_forecast_recursive (hash-ref forecast_data_string 'list) 0 4))
 
   ;return forecast
   forecast)
 
-
+; recursive helper function for making a list of weather objects
 (define (make_forecast_recursive list_of_days start end)
   (if (> start end) '()
       (cons (get_weather (car list_of_days)) (make_forecast_recursive (cdr list_of_days) (+ 1 start) end))))
 
+; function for making an individual weather object
 (define (get_weather weather_data)
   (define obj (new forecast% 
                    ; set values to weather object member variables
