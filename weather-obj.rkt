@@ -1,5 +1,5 @@
 #lang racket
-(require net/url json 2htdp/batch-io racket/date)
+(require net/url json racket/date)
 (provide (all-defined-out))
 
 ; weather class object
@@ -25,18 +25,13 @@
   ; set some defaults for getting weather info from API
   (define imperial "&units=imperial")
   (define app_id "&APPID=024dd4f2839dc4f02b33965583da944f")
-  (define weather_type "weather?")
 
-  ; get the info from API and write it to a file for parsing
-  (define myurl (string->url (string-append "http://api.openweathermap.org/data/2.5/" weather_type "zip=" zipcode ",us" app_id imperial)))
+  ; get the info from API and turn it from JSON to a parsable string
+  (define myurl (string->url (string-append "http://api.openweathermap.org/data/2.5/weather?zip=" zipcode ",us" app_id imperial)))
   (define myport (get-pure-port myurl))
   (define myweather (port->string myport))
   (close-input-port myport)
-  
-  (write-file "weather_data.json" myweather)
-  
-  (define weather_data (read-file "weather_data.json"))
-  (define weather_data_string (string->jsexpr weather_data))
+  (define weather_data_string (string->jsexpr myweather))
   
   ; time to make the object
   (define obj (new weather% 
@@ -65,7 +60,7 @@
   obj)
 
 (define (weather->string forecast)
-  (string-append (get-field location forecast) "\nThe temperature is currently "
-                 (number->string (get-field temp forecast)) "\n" (get-field description forecast)
-                 "\nHigh: " (number->string (get-field high forecast)) "\nLow: "
-                 (number->string (get-field low forecast)))) 
+  (string-append (get-field description forecast) " in " (get-field location forecast) " today "
+                 "\nwith a high of " (number->string (get-field high forecast)) "F and a low of "
+                 (number->string (get-field low forecast)) "F.\n"
+                 "Current temperature is " (number->string (get-field temp forecast)) "F."))

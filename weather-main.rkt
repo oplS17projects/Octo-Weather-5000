@@ -12,7 +12,7 @@
 (define loc-font (make-object font% 12.0 'modern 'normal 'bold #f 'default #f 'aligned))
 
 ; Make the main window frame entitled octo weather 5000
-(define frame (new frame% [label "Octo Weather 5000"]
+(define frame (new frame% [label "OCTO WEATHER 5000"]
                    [width 500]
                    [height 500]
                    ;[stretchable-width 500]
