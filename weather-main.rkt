@@ -16,8 +16,8 @@
 (define frame (new frame% [label "OCTO WEATHER 5000"]
                    [width 500]
                    [height 500]
-                   ;[stretchable-width 500]
-                   ;[stretchable-height 500]
+                   [stretchable-width 500]
+                   [stretchable-height 500]
                    ))
 
 ;; This code is respondisble for displaying the date and time.
@@ -102,14 +102,6 @@
             (send label-text insert (forecast->string forecast)))]))
 
   (send main-panel show #t)
-
-;; these buttons will change out output in the weather section
-;; these do not currently do anything
-(define option-panel (new horizontal-panel% [parent main-panel]
-                                     [alignment '(center center)]))
-(new button% [parent option-panel] [label "One Day"] [horiz-margin 15])
-(new button% [parent option-panel] [label "Three Day"] [horiz-margin 15])
-(new button% [parent option-panel] [label "Five Day"] [horiz-margin 15])
 
 ;; displays
 (send frame show #t)
