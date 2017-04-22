@@ -59,8 +59,11 @@
   ;return the object
   obj)
 
+; a function that access the object members to get the weather information
 (define (weather->string forecast)
   (string-append (get-field description forecast) " in " (get-field location forecast) " today "
                  "\nwith a high of " (number->string (get-field high forecast)) "F and a low of "
                  (number->string (get-field low forecast)) "F.\n"
-                 "Current temperature is " (number->string (get-field temp forecast)) "F."))
+                 "Current temperature is " (number->string (get-field temp forecast)) "F\n" 
+                 "with a cloudy percentage of " (number->string (get-field cloudiness forecast)) "%.\n"
+                 "Humidity is at " (number->string (get-field humidity forecast)) "%."))

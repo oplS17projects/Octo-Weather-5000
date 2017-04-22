@@ -1,5 +1,6 @@
 #lang racket
 (require (file "weather-obj.rkt"))
+(require (file "forecast-obj.rkt"))
 (require racket/date)
 (require racket/gui/base)
 
@@ -72,18 +73,34 @@
             (unless (string->number v)
               (send f set-value (regexp-replace* #rx"[^0-9]+" v ""))))]))
 
-  (define submit-button 
+; weather button gets current weather data
+  (define weather-submit-button 
     (new button% 
          [parent get-zip-group]
-         [label "Submit"]
+         [label "Current Weather"]
          [callback  
           (lambda (button event)
             (define zip-code (send zip-input get-value))
-            (define forecast  (make_weather zip-code))
+            (define forecast (make_weather zip-code))
             (send zip-code-label set-label zip-code)
             (send label-text select-all)
             (send label-text clear)
             (send label-text insert (weather->string forecast)))]))
+
+; forecast button gets five day forecast
+  (define forecast-submit-button 
+    (new button% 
+         [parent get-zip-group]
+         [label "Five Day Forecast"]
+         [callback  
+          (lambda (button event)
+            (define zip-code (send zip-input get-value))
+            (define forecast (make_forecast zip-code))
+            (send zip-code-label set-label zip-code)
+            (send label-text select-all)
+            (send label-text clear)
+            (send label-text insert (forecast->string forecast)))]))
+
   (send main-panel show #t)
 
 ;; these buttons will change out output in the weather section

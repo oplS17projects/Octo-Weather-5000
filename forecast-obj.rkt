@@ -7,8 +7,7 @@
 (define forecast%
   (class object%
     (super-new)
-    (init-field ;location (gotta find a way to get this, and put it somewhere else)
-                description
+    (init-field description
                 temp
                 low
                 high
@@ -51,7 +50,6 @@
 (define (get_weather weather_data)
   (define obj (new forecast% 
                    ; set values to weather object member variables
-                   ;[location (hash-ref (hash-ref forecast_data_string 'city) 'name)]
                    [description (hash-ref (car (hash-ref weather_data 'weather)) 'description)]
                    [temp (hash-ref (hash-ref weather_data 'temp) 'day)]
                    [low (hash-ref (hash-ref weather_data 'temp) 'min)]
@@ -73,5 +71,17 @@
                    [date (date->string (seconds->date (hash-ref weather_data 'dt)))]))
   ;return the object
   obj)
+
+; function that moves through the list of weather objects, getting data from each one
+(define (forecast->string forecast)
+  (cond [(empty? forecast) "\n"]
+        [else (string-append (get-field date (car forecast)) "\n"
+                             (get-field description (car forecast)) "\n"
+                             "high: " (number->string (get-field high (car forecast))) "F\n"
+                             "low: " (number->string (get-field low (car forecast))) "F.\n"
+                             "cloudiness: " (number->string (get-field cloudiness (car forecast))) "%\n"
+                             "humidity: " (number->string (get-field humidity (car forecast))) "%\n"
+                             "\n*********************************\n" (forecast->string (rest forecast)))])
+      )
   
 

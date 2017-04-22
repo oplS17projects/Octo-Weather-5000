@@ -2,57 +2,54 @@
 
 ### Statement
 
-Project revolves around implementing a program that will not only give you relevant time and date information, but weather forecast as well in a practical and useful way. We hope to learn more about APIs, information parsing, and web development in general, and that's why this project is interesting on a personal level.
+Project revolves around implementing a program that gives you relevant weather data and forecast in a practical and useful way. We hope to learn more about APIs, GUI, and information parsing, and that's why this project is interesting on a personal level.
 
 ### Analysis
 
 - DATA ABSTRACTION: getting weather from websites/APIs 
-- OOP/state-modification: Create a weather object and time object and have them do everything.
-- RECURSION: Planning on using recursion to display weather data taken from a list. I'm sure there are other things.
+- OOP/state-modification: Create weather objects and have them do all the work.
+- RECURSION: Use recursion to create and display weather data taken from a list.
 
 
 ### External Technologies
-We plan on using a weather API to provide relevant weather information and parsing the information appropriately.
-We are also going to explore Google Geolocation API with the purpose of displaying the weather near the users current location.
+We used a weather API to provide relevant weather information so we can parse through the information appropriately.
 
 ### Data Sets or other Source Materials
-We will be working with data from APIs that were made available to us. 
+We will be working with data from APIs that were made available to us with the help of racket's net/url library.
 
-**Here's an example of XML data we got from a weather API**
+**Here's an example of JSON data we got from a weather API**
+```
+{"coord":{"lon":-71.76,"lat":42.53},"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],"base":"stations","main":{"temp":45.5,"pressure":1013,"humidity":81,"temp_min":44.6,"temp_max":48.2},"visibility":16093,"wind":{"speed":5.82,"deg":20},"clouds":{"all":90},"dt":1492883760,"sys":{"type":1,"id":1298,"message":0.0051,"country":"US","sunrise":1492854802,"sunset":1492904281},
+"id":4941873,"name":"Leominster","cod":200}
+```
+
+**which was then turned into a string**
 
 ```
-<forecast>
- <time from="2017-04-02T15:00:00" to="2017-04-02T18:00:00">
-  <symbol number="800" name="clear sky" var="02d"/>
-  <precipitation/>
-  <windDirection deg="315.002" code="NW" name="Northwest"/>
-  <windSpeed mps="3.27" name="Light breeze"/>
-  <temperature unit="kelvin" value="284.13" min="283.247" max="284.13"/>
-  <pressure unit="hPa" value="999.89"/>
-  <humidity value="50" unit="%"/>
-  <clouds value="clear sky" all="8" unit="%"/>
- </time>
-```
-We plan to parse through this kind of data to display relevant weather information using Racket's json-parsing library along with other libraries like xtml-parsing and the net/url library.
+#hasheq((wind . #hasheq((speed . 5.82) (deg . 20))) (visibility . 16093) (name . Leominster) (id . 4941873) (base . stations) (main . #hasheq((humidity . 81) (temp_min . 44.6) (temp_max . 48.2) (temp . 45.5) (pressure . 1013))) (coord . #hasheq((lon . -71.76) (lat . 42.53))) (weather . (#hasheq((id . 500) (description . light rain) (main . Rain) (icon . 10d)))) (sys . #hasheq((id . 1298) (type . 1) (country . US) (sunrise . 1492854802) (sunset . 1492904281) (message . 0.1601))) (dt . 1492883760) (clouds . #hasheq((all . 90))) (cod . 200))
 
-We also plan on using Google's Geolocation API once we figure out how to implement it. This will allow the application to get the user's location info, and then we use that to get the weather from our other API.
+```
+We parse through this string to display relevant weather information using mostly hash-table referencing techniques.
+This creates a single weather object. A forecast is created from a list of weather objects, each with their own weather information.
 
 
 ### Deliverable and Demonstration
 
-We will have an application that will deliver date, time, current weather, and forecast. As for interactions, maybe have charts/graphs that are interactive, as well as being able to switch from five (eight?) day forecast to detailed single day forecast.
+We have an application that will deliver date, time, current weather, and forecast. You can interact and request weather from different areas, as well as being able to switch from five day forecast to detailed single day forecast.
 
 ### Evaluation of Results
-**Success if:**
-- The weather and time can be gathered accurately depending on user's location.
+**Successfully implemented:**
+- The weather can be gathered and displayed accurately depending on user's location input.
 - Users can interact with it without having it break.
 
 ## Architecture Diagram
 ![alt tag](https://github.com/oplS17projects/Octo-Weather-5000/blob/master/arch-diagram.png)
 
-Main is the driver for this application that will create the output after collating it using the weather object. The weather object will be built by taking infomation from a weather API and assigning it to class variables. These variables will be used to store the appropriate information relevant to the user. 
+Main is the driver for this application that will create the output after collating it using the weather/forecast objects. The weather object will be built by taking infomation from a weather API and assigning it to class variables. These variables will be used to store the appropriate information relevant to the user. 
 
-After the weather object has been constructed, main will call an output function which will present the information to the user using a graphical user interface, calling on the weather object for its share of the work. In addition to that we will use tz-info to display the local time to the user. 
+After the weather object has been constructed, main will call an output function which will present the information to the user using a graphical user interface, calling on the weather object for its share of the work. 
+
+For the five day forecast, another object must be built, as the information from the API varies depending on weather we request current weather or a forecast. A Forecast object is then built by creating mutliple weather objects using recursion, and is then displayed appropriately as a five day forecast.
 
 ## Schedule
 
@@ -70,7 +67,7 @@ After the weather object has been constructed, main will call an output function
 ## Group Responsibilities
 
 ### Raphael Megali @ramegali
-will write the code necessary to get the relevant weather information extracted.
+wrote the code necessary to get the relevant weather information extracted. Wrote code for weather object and forecast object to hold extracted weather information.
 
 ### Rob Cucchiara @rcucchiara
 will take the retrieved weather data and present it in an appealing and compelling way.
