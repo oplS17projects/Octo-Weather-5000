@@ -19,7 +19,10 @@ We will be working with data from APIs that were made available to us with the h
 
 **Here's an example of JSON data we got from a weather API**
 ```
-{"coord":{"lon":-71.76,"lat":42.53},"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],"base":"stations","main":{"temp":45.5,"pressure":1013,"humidity":81,"temp_min":44.6,"temp_max":48.2},"visibility":16093,"wind":{"speed":5.82,"deg":20},"clouds":{"all":90},"dt":1492883760,"sys":{"type":1,"id":1298,"message":0.0051,"country":"US","sunrise":1492854802,"sunset":1492904281},
+{"coord":{"lon":-71.76,"lat":42.53},
+"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],"base":"stations",
+"main":{"temp":45.5,"pressure":1013,"humidity":81,"temp_min":44.6,"temp_max":48.2},"visibility":16093,"wind":{"speed":5.82,"deg":20},"clouds":{"all":90},"dt":1492883760,
+"sys":{"type":1,"id":1298,"message":0.0051,"country":"US","sunrise":1492854802,"sunset":1492904281},
 "id":4941873,"name":"Leominster","cod":200}
 ```
 
