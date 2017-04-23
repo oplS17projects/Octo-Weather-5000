@@ -46,7 +46,8 @@
 (define label (new editor-canvas%
                    [parent main-panel]
                    [label "current conditions"]
-                   [editor label-text]))
+                   [editor label-text]
+                   [min-height 300]))
 
   (define get-zip-group 
     (new group-box-panel%
