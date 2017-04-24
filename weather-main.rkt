@@ -4,8 +4,6 @@
 (require racket/date)
 (require racket/gui/base)
 
-(define current-forecast '())
-
 ;; this section is for the font object declarations
 ;; these are relics of previous iteration, not sure we need them anymore
 ;; but i am keeping them just in case we do
@@ -41,14 +39,16 @@
                         [min-height 450]
                         [stretchable-height 450]))
 
+;; this creates the area in the window that the forecast will be displayed
 (define label-text (new text%))
-[send label-text insert "No zip code entered.\nPlease enter a zip code below."]
+[send label-text insert (weather->string (make_weather "01854"))]
 (define label (new editor-canvas%
                    [parent main-panel]
                    [label "current conditions"]
                    [editor label-text]
                    [min-height 300]))
 
+;; sets up the area of the main window that prompts the user to enter a zip code
   (define get-zip-group 
     (new group-box-panel%
          [label "Zip Code"]
@@ -56,11 +56,13 @@
          [min-height 100]
          [stretchable-height 100]))
 
+;; this displays on screen the current zip code being searched
   (define zip-code-label
     (new message%
          [parent get-zip-group]
          [label "No Zip Code Entered"] ))
 
+;; this creates the box for the user to type in the zip code
   (define zip-input 
     (new text-field% 
          [parent get-zip-group]
@@ -102,7 +104,8 @@
             (send label-text clear)
             (send label-text insert (forecast->string forecast)))]))
 
+   ;; displays the frame which displays the weather and prompts the user
   (send main-panel show #t)
 
-;; displays
+;; displays the application
 (send frame show #t)
