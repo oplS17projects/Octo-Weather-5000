@@ -12,12 +12,12 @@ Project revolves around implementing a program that gives you relevant weather d
 
 
 ### External Technologies
-We used a weather API to provide relevant weather information so we can parse through the information appropriately.
+We use a weather API to provide relevant weather information so we can parse through the information appropriately.
 
 ### Data Sets or other Source Materials
-We will be working with data from APIs that were made available to us with the help of racket's net/url library.
+We are working with data from APIs that were made available to us with the help of racket's net/url library.
 
-**Here's an example of JSON data we got from a weather API**
+**This is an example of JSON data we got from a weather API**
 ```
 {"coord":{"lon":-71.76,"lat":42.53},
 "weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],"base":"stations",
@@ -38,12 +38,12 @@ This creates a single weather object. A forecast is created from a list of weath
 
 ### Deliverable and Demonstration
 
-We have an application that will deliver date, time, current weather, and forecast. You can interact and request weather from different areas, as well as being able to switch from five day forecast to detailed single day forecast.
+We have an application that delivers the current date, time, weather, and forecast. You can interact and request weather from different areas using the zip code, as well as being able to switch from five day forecast to a more detailed single day forecast.
 
 ### Evaluation of Results
 **Successfully implemented:**
-- The weather can be gathered and displayed accurately depending on user's location input.
-- Users can interact with it without having it break.
+- The weather is gathered and displayed accurately depending on user's location input.
+- Users can interact with the application without any bugs or crashes occuring.
 
 ## Architecture Diagram
 ![alt tag](https://github.com/oplS17projects/Octo-Weather-5000/blob/master/arch-diagram.png)
@@ -52,7 +52,7 @@ Main is the driver for this application that will create the output after collat
 
 After the weather object has been constructed, main will call an output function which will present the information to the user using a graphical user interface, calling on the weather object for its share of the work. 
 
-For the five day forecast, another object must be built, as the information from the API varies depending on weather we request current weather or a forecast. A Forecast object is then built by creating mutliple weather objects using recursion, and is then displayed appropriately as a five day forecast.
+For the five day forecast, another object must be built, as the information from the API varies depending on weather we request, current weather or a forecast. A Forecast object is then built by creating mutliple weather objects using recursion, and is then displayed appropriately as a five day forecast.
 
 ## Schedule
 
@@ -73,4 +73,4 @@ For the five day forecast, another object must be built, as the information from
 wrote the code necessary to get the relevant weather information extracted. Wrote code for weather object and forecast object to hold extracted weather information.
 
 ### Rob Cucchiara @rcucchiara
-will take the retrieved weather data and present it in an appealing and compelling way.
+Created the graphical user interface using the racket-gui library. Wrote most of main and created the flow of information from the objects into strings which were then output on the application. 
