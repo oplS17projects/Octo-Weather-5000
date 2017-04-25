@@ -36,7 +36,7 @@
   ; make_forecast is now called recursively to create weather objects
   ; and put them in a list called forecast.
   ; this becomes the five day forecast
-  ; as long as a valid zipcode is provided
+  ; as long as a valid zipcode is provided (will create an empty list otherwise)
   (define forecast (if (hash-has-key? forecast_data_string 'list) (make_forecast_recursive (hash-ref forecast_data_string 'list) 0 4)
       empty))
 
