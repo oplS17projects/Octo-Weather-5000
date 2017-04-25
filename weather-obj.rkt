@@ -32,38 +32,61 @@
   (define myweather (port->string myport))
   (close-input-port myport)
   (define weather_data_string (string->jsexpr myweather))
-  
-  ; time to make the object
-  (define obj (new weather% 
-       ; set values to weather object member variables
-       [location (hash-ref weather_data_string 'name)]
-       [description (hash-ref (car (hash-ref weather_data_string 'weather)) 'description)]
-       [temp (hash-ref (hash-ref weather_data_string 'main) 'temp)]
-       [low (hash-ref (hash-ref weather_data_string 'main) 'temp_min)]
-       [high (hash-ref (hash-ref weather_data_string 'main) 'temp_max)]
-       [pressure (hash-ref (hash-ref weather_data_string 'main) 'pressure)] ; atmospheric pressure (hPa)
-       [humidity (hash-ref (hash-ref weather_data_string 'main) 'humidity)]
-       [cloudiness (hash-ref (hash-ref weather_data_string 'clouds) 'all)] ; this is a percentage
-       [wind (hash-ref (hash-ref weather_data_string 'wind) 'speed)] ; can also get wind direction?
-       
-       ; precipitation (in terms of volume in the last 3 hours)
-       [rain (if (hash-has-key? weather_data_string 'rain)
-                 (hash-ref (hash-ref weather_data_string 'rain) '3h)
-                 0)]
-       [snow (if (hash-has-key? weather_data_string 'snow)
-                 (hash-ref (hash-ref weather_data_string 'snow) '3h)
-                 0)]
-       
-       ; date weather info was taken (should always be current date)
-       [date (date->string (seconds->date (hash-ref weather_data_string 'dt)))]))
+
+  ; time to make the object, if a valid zipcode was provided
+  (if (hash-has-key? weather_data_string 'name) (make_weather_object weather_data_string)
+      (make_invalid_weather_object)))
+
+; make a valid weather object
+(define (make_weather_object weather_data_string)
+    (define obj (new weather% 
+                   ; set values to weather object member variables
+                   [location (hash-ref weather_data_string 'name)]
+                   [description (hash-ref (car (hash-ref weather_data_string 'weather)) 'description)]
+                   [temp (hash-ref (hash-ref weather_data_string 'main) 'temp)]
+                   [low (hash-ref (hash-ref weather_data_string 'main) 'temp_min)]
+                   [high (hash-ref (hash-ref weather_data_string 'main) 'temp_max)]
+                   [pressure (hash-ref (hash-ref weather_data_string 'main) 'pressure)] ; atmospheric pressure (hPa)
+                   [humidity (hash-ref (hash-ref weather_data_string 'main) 'humidity)]
+                   [cloudiness (hash-ref (hash-ref weather_data_string 'clouds) 'all)] ; this is a percentage
+                   [wind (hash-ref (hash-ref weather_data_string 'wind) 'speed)] ; can also get wind direction?
+                   
+                   ; precipitation (in terms of volume in the last 3 hours)
+                   [rain (if (hash-has-key? weather_data_string 'rain)
+                             (hash-ref (hash-ref weather_data_string 'rain) '3h)
+                             0)]
+                   [snow (if (hash-has-key? weather_data_string 'snow)
+                             (hash-ref (hash-ref weather_data_string 'snow) '3h)
+                             0)]
+                   
+                   ; date weather info was taken (should always be current date)
+                   [date (date->string (seconds->date (hash-ref weather_data_string 'dt)))]))
   ;return the object
+  obj)
+
+; make an invalid weather object
+(define (make_invalid_weather_object)
+   (define obj (new weather% 
+                   [location "INVALID ZIPCODE"]
+                   [description "none"]
+                   [temp 0]
+                   [low 0]
+                   [high 0]
+                   [pressure 0]
+                   [humidity 0]
+                   [cloudiness 0]
+                   [wind 0]
+                   [rain 0]
+                   [snow 0]
+                   [date "nope"]))
   obj)
 
 ; a function that access the object members to get the weather information
 (define (weather->string forecast)
-  (string-append (get-field description forecast) " in " (get-field location forecast) " today "
-                 "\nwith a high of " (number->string (get-field high forecast)) "F and a low of "
-                 (number->string (get-field low forecast)) "F.\n"
-                 "Current temperature is " (number->string (get-field temp forecast)) "F\n" 
-                 "with a cloudy percentage of " (number->string (get-field cloudiness forecast)) "%.\n"
-                 "Humidity is at " (number->string (get-field humidity forecast)) "%."))
+  (if (equal? "INVALID ZIPCODE" (get-field location forecast)) "INVALID ZIPCODE"
+      (string-append (get-field description forecast) " in " (get-field location forecast) " today "
+                     "\nwith a high of " (number->string (get-field high forecast)) "F and a low of "
+                     (number->string (get-field low forecast)) "F.\n"
+                     "Current temperature is " (number->string (get-field temp forecast)) "F\n" 
+                     "with a cloudy percentage of " (number->string (get-field cloudiness forecast)) "%.\n"
+                     "Humidity is at " (number->string (get-field humidity forecast)) "%.")))

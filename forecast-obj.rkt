@@ -36,7 +36,9 @@
   ; make_forecast is now called recursively to create weather objects
   ; and put them in a list called forecast.
   ; this becomes the five day forecast
-  (define forecast (make_forecast_recursive (hash-ref forecast_data_string 'list) 0 4))
+  ; as long as a valid zipcode is provided
+  (define forecast (if (hash-has-key? forecast_data_string 'list) (make_forecast_recursive (hash-ref forecast_data_string 'list) 0 4)
+      empty))
 
   ;return forecast
   forecast)
@@ -74,14 +76,13 @@
 
 ; function that moves through the list of weather objects, getting data from each one
 (define (forecast->string forecast)
-  (cond [(empty? forecast) "\n"]
-        [else (string-append (get-field date (car forecast)) "\n"
-                             (get-field description (car forecast)) "\n"
-                             "high: " (number->string (get-field high (car forecast))) "F\n"
-                             "low: " (number->string (get-field low (car forecast))) "F.\n"
-                             "cloudiness: " (number->string (get-field cloudiness (car forecast))) "%\n"
-                             "humidity: " (number->string (get-field humidity (car forecast))) "%\n"
-                             "\n*********************************\n" (forecast->string (rest forecast)))])
-      )
+  (if (empty? forecast) "END OF FORECAST"
+      (string-append (get-field date (car forecast)) "\n"
+                     (get-field description (car forecast)) "\n"
+                     "high: " (number->string (get-field high (car forecast))) "F\n"
+                     "low: " (number->string (get-field low (car forecast))) "F.\n"
+                     "cloudiness: " (number->string (get-field cloudiness (car forecast))) "%\n"
+                     "humidity: " (number->string (get-field humidity (car forecast))) "%\n"
+                     "\n*********************************\n" (forecast->string (rest forecast)))))
   
 
