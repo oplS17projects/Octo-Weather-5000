@@ -53,16 +53,16 @@ The fields are all defined with values once the information is gathered from the
 Once a zipcode is provided by the user, it is passed to a procedure that will produce the forecast for us. 
 This is how it makes the call to the API (zipcode, app_id and imperial variables being defined prior to the call):
 ```
-  (define myurl (string->url (string-append "http://api.openweathermap.org/data/2.5/forecast/daily?zip=" zipcode ",us" app_id imperial)))
+(define myurl (string->url (string-append "http://api.openweathermap.org/data/2.5/forecast/daily?zip=" zipcode ",us" app_id imperial)))
 ```
 That information is turned into a string:
 ```
 (define myport (get-pure-port myurl))
-  (define myforecast (port->string myport))
+(define myforecast (port->string myport))
 ```
 Which then becomes a json expression:
 ```
-  (define forecast_data_string (string->jsexpr myforecast))
+(define forecast_data_string (string->jsexpr myforecast))
 ```
 Since this list appears as a hash map when converted by the JSON library, I was able to use hash table referencing techniques to extract the information I needed from this json expression.
 
@@ -70,8 +70,9 @@ Since this list appears as a hash map when converted by the JSON library, I was 
 The five day forecast in our program is represented by a list, where each element of the list is a weather object, as outlined above. I used what I learned throughout the course regarding lists in order to create one recursively.
 This is the call to make the forecast (list):
 ```
-(define forecast (if (hash-has-key? forecast_data_string 'list) (make_forecast_recursive (hash-ref forecast_data_string 'list) 0 4)
-      empty))
+(define forecast (if (hash-has-key? forecast_data_string 'list) 
+	(make_forecast_recursive (hash-ref forecast_data_string 'list) 0 4)
+         empty))
 ```
 This if statement checks to see if a valid zipcode was provided. If it wasn't valid, an empty list will be returned (no forecast). If not, it will call a procedure to make a list recursively.
 
@@ -90,13 +91,13 @@ Once the end of the list is reached, an empty list is returned, and all the weat
 Using recursion in Racket was something I initially had a difficult time with, but with practice, it became more natural, and I was able to utilize it as a powerful tool.
 
 ## 4) Using Data Abstraction to parse through JSON data
-Here's a code excerpt on how to get the high and low temperature for a day:
+Here's a code excerpt on how I got the high and low temperature for a day:
 ```
 [low (hash-ref (hash-ref weather_data 'temp) 'min)]
 [high (hash-ref (hash-ref weather_data 'temp) 'max)]
 ```
-This retrieves the ```min``` and ```max``` values from ```temp```, which is retrieved from the json expression ```weather_data```, and assigns those values to the low and high member variables of the weather object. Thus, the weather object is initialized.
-This kind of process is repeated for each member variable in the object, and is how I store the information to be accessed later.
+This retrieves the ```min``` and ```max``` values from ```temp```, which is retrieved from the json expression ```weather_data```, and assigns those values to the ```low``` and ```high``` member variables of the weather object. 
+This kind of process is repeated for each member variable in the object, and is how I store the information to be accessed later. Thus, the weather object is initialized.
 
 ## 5) Using Recursion to display the weather data
 Finally, I used recursion once again in order to display the weather information to the user. 
@@ -116,6 +117,8 @@ This is another recursive procedure that takes a forecast (the list of weather o
 
 This procedure is called from the main driver, which was written by my partner Rob.
 
+### Important note
+Because the information provided to me by the API is in different forms based on whether I want a single day or five day forecast, I ended up writing separate code to get the single day forecast, which varies slightly in the data abstraction part outlined above. The essence of what I am doing, however, remains the same.
 
 
 
